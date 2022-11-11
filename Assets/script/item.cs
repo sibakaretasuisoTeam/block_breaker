@@ -7,8 +7,8 @@ public class Item : MonoBehaviour
     public string name = "NoName";
     public float effectTime = 5;
     public float gravitySpeed = -5f;
-
-    private float sTime = 0;
+    public int status = 0; // 0:落下中 1:効果中 2:効果切れた
+    private float sTime = Mathf.Infinity;
 
     public virtual void SetStatus(){
         name = "NoName";
@@ -28,13 +28,17 @@ public class Item : MonoBehaviour
         SetStatus();
     }
 
-    public virtual void Update()
+    public void Update()
     {
-        this.GetComponent<Rigidbody>().velocity = new Vector3(0f, gravitySpeed, 0f);
-
+        if(status == 0){
+            this.GetComponent<Rigidbody>().velocity = new Vector3(0f, gravitySpeed, 0f);
+        }
+        Debug.Log(sTime);
         //効果時間が切れたら削除
-        if(Time.time - sTime < effectTime){
+        if(Time.time - sTime > effectTime){
+            status = 2;
             BeforeDestroy();
+            Debug.Log(name + " destroyed");
             Destroy(this.gameObject);
         }
     }
@@ -43,15 +47,18 @@ public class Item : MonoBehaviour
     {
         if (other.gameObject.name == "Bottom wall")
         {
-            Destroy(this.gameObject);
+            if(status ==0){
+                Destroy(this.gameObject);
+            }
         }
 
         //バーに当たったら効果発動
         if (other.gameObject.name == "Bar")
         {
+            status = 1;
             sTime = Time.time;
-            Activation();
             Debug.Log(name + " activated");
+            Activation();
         }
     }
 }
