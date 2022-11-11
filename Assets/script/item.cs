@@ -5,31 +5,53 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public string name = "NoName";
+    public float effectTime = 5;
     public float gravitySpeed = -5f;
+
+    private float sTime = 0;
+
+    public virtual void SetStatus(){
+        name = "NoName";
+        effectTime = 5;
+    }
 
     public virtual void Activation()
     {
         Debug.Log("Item will activate...");
     }
 
-    public virtual void Start(){}
+    public virtual void BeforeDestroy(){
+        Debug.Log("Item will be destroyed...");
+    }
+
+    public virtual void Start(){
+        SetStatus();
+    }
 
     public virtual void Update()
     {
         this.GetComponent<Rigidbody>().velocity = new Vector3(0f, gravitySpeed, 0f);
+
+        //効果時間が切れたら削除
+        if(Time.time - sTime < effectTime){
+            BeforeDestroy();
+            Destroy(this.gameObject);
+        }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Bottom wall")
         {
             Destroy(this.gameObject);
         }
+
+        //バーに当たったら効果発動
         if (other.gameObject.name == "Bar")
         {
+            sTime = Time.time;
             Activation();
             Debug.Log(name + " activated");
-            //Destroy(this.gameObject);
         }
     }
 }

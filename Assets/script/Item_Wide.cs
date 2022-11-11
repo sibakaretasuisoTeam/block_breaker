@@ -11,22 +11,24 @@ using UnityEditor;
 //Enemyクラスを親クラスに設定
 public class Item_Wide : Item
 {
-    private float sTime = 0;
-    private float effectTime = 5;
+
+
+    public override void SetStatus()
+    {
+        //ここでステータスを指定
+        name = "Wide";
+        effectTime = 5;
+    }
 
     public override void Activation()
     {
-        base.Activation();
-        sTime = Time.time;
+        //アイテムの効果
         Debug.Log("Wide_Item activated");
+        GameObject.Find("Bar").transform.localScale = new Vector3(6, 0.5f, 1);
     }
 
-    public override void Update(){
-        base.Update();
-        if(Time.time - sTime < effectTime){
-        }
-        else{
-            Destroy(this.gameObject);
-        }
+    public override void BeforeDestroy(){
+        //アイテムの効果切れる時の処理
+        GameObject.Find("Bar").transform.localScale = new Vector3(3, 0.5f, 1);
     }
 }
