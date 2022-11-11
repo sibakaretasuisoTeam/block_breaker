@@ -1,32 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class item : MonoBehaviour
+//アイテムの親クラス
+public class Item : MonoBehaviour
 {
-    Rigidbody myRigidbody;
-    public float ispeed = -5f;
-    // Start is called before the first frame update
-    void Start()
+    public string name = "NoName";
+    public float gravitySpeed = -5f;
+
+    public virtual void Activation()
     {
-        myRigidbody = GetComponent<Rigidbody>();
-        
+        Debug.Log("Item will activate...");
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void Start(){}
+
+    public virtual void Update()
     {
-       myRigidbody.velocity = new Vector3(0f, ispeed, 0f);
+        this.GetComponent<Rigidbody>().velocity = new Vector3(0f, gravitySpeed, 0f);
     }
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.name == "Bottom wall")
         {
-            if (collision.gameObject.name == "Bottom wall")
-            {
-                Destroy(gameObject);
-            }
-            if (collision.gameObject.name == "Bar")
-            {
-                Destroy(gameObject);
-            }
+            Destroy(this.gameObject);
         }
+        if (other.gameObject.name == "Bar")
+        {
+            Activation();
+            Debug.Log(name + " activated");
+            //Destroy(this.gameObject);
+        }
+    }
 }
