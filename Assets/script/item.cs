@@ -10,21 +10,24 @@ public class Item : MonoBehaviour
     public int status = 0; // 0:落下中 1:効果中 2:効果切れた
     private float sTime = Mathf.Infinity;
 
+    //ステータス色々設定
     public virtual void SetStatus(){
         name = "NoName";
         effectTime = 5;
     }
 
+    //アイテムの効果処理
     public virtual void Activation()
     {
         Debug.Log("Item will activate...");
     }
 
+    //アイテムの効果切れる時の処理
     public virtual void BeforeDestroy(){
         Debug.Log("Item will be destroyed...");
     }
 
-    public virtual void Start(){
+    public void Start(){
         SetStatus();
     }
 
@@ -47,7 +50,7 @@ public class Item : MonoBehaviour
     {
         if (other.gameObject.name == "Bottom wall")
         {
-            if(status ==0){
+            if(status == 0){
                 Destroy(this.gameObject);
             }
         }
