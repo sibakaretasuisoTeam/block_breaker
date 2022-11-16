@@ -9,6 +9,7 @@ public class Break : MonoBehaviour
     public GameObject block;
     //作成するアイテム
     public GameObject wide;
+    int shp;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,15 +19,29 @@ public class Break : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    private void OnCollisionEnter(Collision collision) {
-        if(collision.gameObject.name == "Sphere"){
+    //hp設定
+    public void sethp(int hp)
+    {
+        shp = hp;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Sphere")
+        {
             //ブロックの位置取得
             Vector3 itemposition = block.transform.position;
             //アイテム生成
-            Instantiate (wide, itemposition, Quaternion.identity);
-            Destroy(gameObject);
+            Instantiate(wide, itemposition, Quaternion.identity);
+            if (shp == 1)
+            {
+                //ブロック破壊
+                Destroy(gameObject);
+            }else if(shp == 2){
+                //hp変更
+                shp--;            
+            }
         }
     }
 }

@@ -7,8 +7,10 @@ public class block_clone : MonoBehaviour
   // Start is called before the first frame update
   public GameObject original;
   public int block;
+  public List<GameObject> clone = new List<GameObject>();
   void Start()
   {
+    int num = 0;
     block = 0;
     Transform myTransform = original.transform;
     Vector3 pos = myTransform.position;
@@ -26,13 +28,19 @@ public class block_clone : MonoBehaviour
           {
             if ((j < 5 || j > 8) && i < 9)
             {
-              Instantiate(original, new Vector3(pos.x + j - 0.1f * j, pos.y - i + 0.1f * i, pos.z), Quaternion.identity);
+              clone.Add(Instantiate(original, new Vector3(pos.x + j - 0.1f * j, pos.y - i + 0.1f * i, pos.z), Quaternion.identity) as GameObject);
               block++;
+              Break bre = clone[num].GetComponent<Break>();
+              bre.sethp(1);
+              num++;
             }
             else if (i == 9)
             {
-              Instantiate(original, new Vector3(pos.x + j - 0.1f * j, pos.y - i + 0.1f * i, pos.z), Quaternion.identity);
+              clone.Add(Instantiate(original, new Vector3(pos.x + j - 0.1f * j, pos.y - i + 0.1f * i, pos.z), Quaternion.identity));
               block++;
+              Break bre = clone[num].GetComponent<Break>();
+              bre.sethp(2);
+              num++;
             }
           }
         }
