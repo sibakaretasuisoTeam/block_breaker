@@ -67,4 +67,14 @@ public class ball : MonoBehaviour
                 Debug.Log(pscore);
             }
         }
+    //プロパティによる値参照関数
+    public Vector3 Position // プロパティ
+    {
+      get { return initialPosition; }  // 通称ゲッター。呼び出した側がscoreを参照できる // 通称セッター。value はセットする側の数字などを反映する
+    }
+    public Vector3 StartChange
+    {
+        get{return myRigidbody.velocity;}
+        set{myRigidbody.velocity = value;}
+    }
 }
