@@ -37,7 +37,7 @@ public class block_clone : MonoBehaviour
             else if (i == 9)
             {
               clone.Add(Instantiate(original, new Vector3(pos.x + j - 0.1f * j, pos.y - i + 0.1f * i, pos.z), Quaternion.identity));
-              block++;
+              block += 2;
               Break bre = clone[num].GetComponent<Break>();
               bre.sethp(2);
               num++;
