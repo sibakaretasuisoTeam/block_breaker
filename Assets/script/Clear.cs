@@ -23,7 +23,7 @@ public class Clear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(blockScript.block - scoreScript.pscore < 5 && blockScript.block != 0){
+        if(blockScript.block - scoreScript.pscore < 2 && blockScript.block != 0){
             SceneManager.LoadScene("GameCrear", LoadSceneMode.Single);
         }else{
             Debug.Log("あと" + (blockScript.block - scoreScript.pscore));

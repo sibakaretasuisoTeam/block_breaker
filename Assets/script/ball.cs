@@ -63,6 +63,7 @@ public class ball : MonoBehaviour
             }
             //ブロックとぶつかったとき
             if(collision.gameObject.name == "block(Clone)"){
+                
                 pscore+=1;
                 Debug.Log(pscore);
             }
